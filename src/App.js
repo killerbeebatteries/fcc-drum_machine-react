@@ -63,8 +63,8 @@ class PadBank extends React.Component {
     }
   };
 
-  playSound() {
-    const sound = document.getElementById(cymbols[0].keyTrigger);
+  playSound(keyTrigger) {
+    const sound = document.getElementById(keyTrigger);
     sound.currentTime = 0;
     sound.play();
   };
@@ -75,7 +75,7 @@ class PadBank extends React.Component {
         <div className="row" id="cymbols">
           <div className="col-sm-6 drum-pad" id="highHat"
             id={cymbols[0].id}
-            onClick={this.playSound}
+            onClick={() => this.playSound(cymbols[0].keyTrigger)}
             >
             <audio
               className='clip'
@@ -92,7 +92,7 @@ class PadBank extends React.Component {
         <div className="row" id="drums">
           <div className="col-sm-6 drum-pad" id="snareDrum"
           id={drums[0].id}
-          onClick={this.playSound}
+          onClick={() => this.playSound(drums[0].keyTrigger)}
           >
           <audio
             className='clip'
