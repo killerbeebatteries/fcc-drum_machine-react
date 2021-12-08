@@ -15,10 +15,12 @@ const cymbols = [
 ]
 
 const drums = [
-  keyCode: 65,
-  keyTrigger: 'Q',
-  id: "snareDrum",
-  url: "https://soundcamp.org/sounds/381/snare/A/subtle-reverb-snare-drum-sound-a-key-01-Kb6.ogg"
+  {
+    keyCode: 65,
+    keyTrigger: 'Q',
+    id: "snareDrum",
+    url: "https://soundcamp.org/sounds/381/snare/A/subtle-reverb-snare-drum-sound-a-key-01-Kb6.ogg"
+  }
 
 ]
 
@@ -34,7 +36,7 @@ class App extends React.Component {
       <div className="container bg-primary" id="main">
         <div className="row">
           <div className="col-sm-6">
-            <Pad />
+            <PadBank />
           </div>
           <div className="col-sm-6">
             <Controls />
@@ -45,19 +47,44 @@ class App extends React.Component {
   }
 }
 
-class Pad extends React.Component {
+class PadBank extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       todo: true
     }
+    this.playSound = this.playSound.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+
   };
+  handleKeyPress(e) {
+    if (e.keyCode === this.props.keyCode) {
+      this.playSound();
+    }
+  };
+
+  playSound() {
+    const sound = document.getElementById(cymbols[0].keyTrigger);
+    sound.currentTime = 0;
+    sound.play();
+  };
+
   render() {
   return (
       <div className="container bg-secondary" id="pad">
         <div className="row" id="cymbols">
-          <div className="col-sm-6" id="highHat">
+          <div className="col-sm-6" id="highHat"
+            className='drum-pad'
+            id={cymbols[0].id}
+            onClick={this.playSound}
+            >
+            <audio
+              className='clip'
+              id={cymbols[0].keyTrigger}
+              src={cymbols[0].url}
+            />
             <h4>highHat</h4>
+            {cymbols[0].keyTrigger}
           </div>
           <div className="col-sm-6" id="cymbol">
             <h4>cymbol</h4>
